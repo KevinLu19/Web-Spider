@@ -1,5 +1,7 @@
 from selenium import webdriver
 
+import time
+
 custom_url = "https://maplestory.nexon.net/News/"
 
 try:
@@ -11,18 +13,21 @@ try:
 
     news_container = []
 
-    # news = brower.find_element_by_class_name("news-wrapper")
-    # print_news = news.get_attribute("innerHTML")
-    # print (print_news)
+    maple_news = brower.find_element_by_class_name("news-wrapper")
+    news_ul = maple_news.find_elements_by_tag_name("ul")
 
-    #news_xpath = brower.find_element_by_xpath("/html/body/div[3]/div[3]/div/div/div[2]/ul")
-    #news_xpath = brower.find_elements_by_xpath("//*[@href]")
+    for query_item in news_ul:
+        # text_form = query_item.text
+        # print (text_form)
 
-    news_xpath = brower.find_element_by_xpath("//*[@class='news-wrapper']")
-    print (news_xpath.get_attribute("innerHTML"))
+        query_innerHTML = query_item.get_attribute("innerHTML")
+        query_split_lines = query_innerHTML.strip().splitlines()
 
-    # for hrefs in news_xpath:
-    #     print (hrefs.get_attribute("href"))
+        for items in query_split_lines:
+            if "href=" in items:
+                print (items)
+
+
 
 finally:
     try:
